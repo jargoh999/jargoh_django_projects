@@ -16,6 +16,10 @@ def list_account(request):
 
 @api_view()
 def account_detail(request, pk):
-    account = Account.objects.get(pk=pk)
-    serializer = AccountSerializer(account)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        account = Account.objects.get(pk=pk)
+        serializer = AccountSerializer(account)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Account.DoesNotExist:
+        return Response({"message": "Account does not exist"}, status=status.HTTP_404_NOT_FOUND)
