@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -16,10 +17,6 @@ def list_account(request):
 
 @api_view()
 def account_detail(request, pk):
-    try:
-        account = Account.objects.get(pk=pk)
-        serializer = AccountSerializer(account)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    except Account.DoesNotExist:
-        return Response({"message": "Account does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    account = get_object_or_404(Account, pk=pk)
+    serializer = AccountSerializer(account)
+    return Response(serializer.data, status=status.HTTP_200_OK)
