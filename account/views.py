@@ -19,3 +19,4 @@ def account_detail(request, pk):
     account = Account.objects.get(pk=pk)
     serializer = AccountSerializer(account)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
