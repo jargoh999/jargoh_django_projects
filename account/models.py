@@ -1,5 +1,6 @@
 from django.db import models
 from .utils import generate_account_number
+from .validators import validate_pin
 
 
 # Create your models here.
@@ -11,7 +12,7 @@ class Account(models.Model):
                                       primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    pin = models.CharField(max_length=4)
+    pin = models.CharField(max_length=4, validators=[validate_pin])
     balance = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     ACCOUNT_TYPE = [
         ('S', 'SAVINGS'),
